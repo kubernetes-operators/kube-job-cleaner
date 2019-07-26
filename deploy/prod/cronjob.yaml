@@ -1,0 +1,52 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: kube-job-cleaner
+  namespace: prod
+  labels:
+    application: kube-job-cleaner
+    version: "0.1"
+spec:
+  schedule: "13 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            application: kube-job-cleaner
+            version: "0.1"
+        spec:
+          serviceAccountName: kube-job-cleaner
+          restartPolicy: OnFailure
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                    - key: node-env
+                      operator: In
+                      values:
+                        - PROD
+                    - key: node-type
+                      operator: In
+                      values:
+                        - Job
+          tolerations:
+            - effect: NoSchedule
+              key: node-env
+              operator: Equal
+              value: PROD
+            - effect: NoSchedule
+              key: node-type
+              operator: Equal
+              value: Job
+          containers:
+          - name: cleaner
+            image: "hjacobs/kube-job-cleaner:0.7"
+            resources:
+              limits:
+                cpu: 200m
+                memory: 100Mi
+              requests:
+                cpu: 50m
+                memory: 50Mi
