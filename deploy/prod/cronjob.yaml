@@ -4,8 +4,7 @@ metadata:
   name: kube-job-cleaner
   namespace: prod
   labels:
-    application: kube-job-cleaner
-    version: "0.1"
+    app-name: kube-job-cleaner
 spec:
   schedule: "13 * * * *"
   jobTemplate:
