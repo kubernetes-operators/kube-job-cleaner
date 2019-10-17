@@ -20,7 +20,7 @@ Deploying:
 
 .. code-block:: bash
 
-    $ kubectl apply -f deploy/prod
+    $ kubectl apply -f deploy/${env}
 
 There are a few options:
 
