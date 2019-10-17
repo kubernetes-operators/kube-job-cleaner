@@ -2,7 +2,7 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   name: kube-job-cleaner
-  namespace: sit
+  namespace: test
   labels:
     app-name: kube-job-cleaner
 spec:
@@ -25,7 +25,7 @@ spec:
                     - key: node-env
                       operator: In
                       values:
-                        - SIT
+                        - TEST
                     - key: node-type
                       operator: In
                       values:
@@ -34,7 +34,7 @@ spec:
             - effect: NoSchedule
               key: node-env
               operator: Equal
-              value: SIT
+              value: TEST
             - effect: NoSchedule
               key: node-type
               operator: Equal
