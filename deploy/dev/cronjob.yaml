@@ -6,7 +6,7 @@ metadata:
   labels:
     app-name: kube-job-cleaner
 spec:
-  schedule: "*/13 * * * *"
+  schedule: "13 * * * *"
   jobTemplate:
     spec:
       template:
