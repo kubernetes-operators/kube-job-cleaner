@@ -104,9 +104,8 @@ def main():
     for job in pykube.Job.objects(api, namespace=namespace):
         delete_if_expired(args.dry_run, job, job_expired(args.seconds, args.timeout_seconds, job))
 
-    #  Clear job joint pod was clear, no clear exception in the pod
-    #  for pod in pykube.Pod.objects(api, namespace=namespace):
-        #  delete_if_expired(args.dry_run, pod, pod_expired(args.seconds, pod))
+    for pod in pykube.Pod.objects(api, namespace=namespace):
+        delete_if_expired(args.dry_run, pod, pod_expired(args.seconds, pod))
 
 
 if __name__ == "__main__":
